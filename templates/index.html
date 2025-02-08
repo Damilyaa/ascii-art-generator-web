@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <title>ASCII-ART Web</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            margin: 0;
+        }
+        #screen {
+            position: relative;
+            width: 90vw;
+            max-width: 2000px;
+            height: 90vh;
+            max-height: 1100px;
+            background-color: green;
+            overflow: hidden;
+            border: 10px solid black;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #scan, #bezel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        #scan {
+            opacity: 0.2;
+            z-index: 2;
+        }
+        #bezel {
+            z-index: 3;
+        }
+        #content {
+            font-family: 'VT323', monospace;
+            color: rgb(159, 248, 25);
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgb(100, 150, 100), 0 0 2em rgb(100, 150, 100), 0 0 0.3em rgb(100, 150, 100);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        input, select, button {
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            padding: 10px;
+            margin: 10px;
+            background: black;
+            color: rgb(159, 248, 25);
+            border: 2px solid rgb(159, 248, 25);
+            outline: none;
+        }
+        button {
+            cursor: pointer;
+        }
+        #ascii-output {
+            margin-top: 20px;
+            white-space: pre;
+            font-size: 16px; 
+            overflow: auto;
+            max-height: 300px;
+            border: 2px solid rgb(159, 248, 25);
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left:20px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="screen">
+        <img src="/static/images/scanlines.png" id="scan">
+        <img src="/static/images/bezel.png" id="bezel">
+        
+        <div id="content">
+            <h1>ASCII ART Web</h1>
+
+            <form id="ascii-form">
+                <input type="text" id="text-input" placeholder="Enter text..." required>
+                
+                <select id="banner-select">
+                    <option value="standard">Standard</option>
+                    <option value="shadow">Shadow</option>
+                    <option value="thinkertoy">Thinkertoy</option>
+                </select>
+                
+                <button type="submit">Generate</button>
+            </form>
+
+            <pre id="ascii-output"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("ascii-form").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+
+    const text = document.getElementById("text-input").value;
+    const banner = document.getElementById("banner-select").value;
+    const output = document.getElementById("ascii-output");
+
+    if (!text.trim()) {
+        output.textContent = "Please enter text!";
+        return;
+    }
+
+    fetch("/ascii-art", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ text, banner })
+    })
+    .then(response => response.text())
+    .then(data => {
+        output.textContent = data; 
+    })
+    .catch(error => {
+        output.textContent = "Error: " + error;
+    });
+});
+
+    </script>
+</body>
+</html>
