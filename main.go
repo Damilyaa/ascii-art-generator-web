@@ -7,36 +7,59 @@ import (
 	"net/http"
 )
 
-var templates = template.Must(template.ParseFiles("templates/index.html"))
+// Load all templates, including error pages
+var templates = template.Must(template.ParseFiles(
+	"templates/index.html",
+	"templates/400.html",
+	"templates/404.html",
+	"templates/500.html",
+))
 
 func main() {
+	// Serve static files
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	http.HandleFunc("/", homeHandler)
+	// Handle routes
+	http.HandleFunc("/", homeHandler) // ✅ Single handler for "/"
 	http.HandleFunc("/ascii-art", asciiArtHandler)
 
 	fmt.Println("Server running on http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		fmt.Println("Server failed to start:", err)
+	}
 }
 
+// Home Page Handler
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		renderErrorPage(w, http.StatusMethodNotAllowed, "405 Method Not Allowed")
 		return
 	}
-	templates.ExecuteTemplate(w, "index.html", nil)
+
+	// ✅ Check if the requested URL is exactly "/"
+	if r.URL.Path != "/" {
+		renderErrorPage(w, http.StatusNotFound, "404 Not Found: Page does not exist")
+		return
+	}
+
+	err := templates.ExecuteTemplate(w, "index.html", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
+// ASCII Art Generation Handler
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		renderErrorPage(w, http.StatusMethodNotAllowed, "405 Method Not Allowed")
 		return
 	}
 
 	err := r.ParseForm()
 	if err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		renderErrorPage(w, http.StatusBadRequest, "400 Bad Request: Invalid form data")
 		return
 	}
 
@@ -44,28 +67,54 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	banner := r.FormValue("banner")
 
 	if text == "" || banner == "" {
-		http.Error(w, "Bad Request: Missing text or banner", http.StatusBadRequest)
+		renderErrorPage(w, http.StatusBadRequest, "400 Bad Request: Missing text or banner")
 		return
 	}
 
 	templatesMap, err := banners.ParseTemplates()
 	if err != nil {
-		http.Error(w, "Internal Server Error: cannot load banners", http.StatusInternalServerError)
+		renderErrorPage(w, http.StatusInternalServerError, "500 Internal Server Error: Failed to load banners")
 		return
 	}
 
 	tmpl, exists := templatesMap[banner]
 	if !exists {
-		http.Error(w, "Not Found: banner not found", http.StatusNotFound)
+		renderErrorPage(w, http.StatusNotFound, "404 Not Found: Banner not found")
 		return
 	}
 
 	result, err := tmpl.Execute(text)
 	if err != nil {
-		http.Error(w, "Internal Server Error: failed to generate ASCII", http.StatusInternalServerError)
+		renderErrorPage(w, http.StatusInternalServerError, "500 Internal Server Error: ASCII generation failed")
 		return
 	}
 
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte(result))
+}
+
+// Custom Error Page Rendering
+func renderErrorPage(w http.ResponseWriter, statusCode int, message string) {
+	w.WriteHeader(statusCode) // Must be set before writing response
+
+	var errorTemplate string
+	switch statusCode {
+	case http.StatusBadRequest:
+		errorTemplate = "400.html"
+	case http.StatusNotFound:
+		errorTemplate = "404.html"
+	case http.StatusInternalServerError:
+		errorTemplate = "500.html"
+	default:
+		errorTemplate = "404.html"
+	}
+
+	// Execute the corresponding error template
+	err := templates.ExecuteTemplate(w, errorTemplate, map[string]interface{}{
+		"StatusCode": statusCode,
+		"Message":    message,
+	})
+	if err != nil {
+		http.Error(w, "Error rendering error page", http.StatusInternalServerError)
+	}
 }
