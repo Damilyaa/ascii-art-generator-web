@@ -21,7 +21,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// Handle routes
-	http.HandleFunc("/", homeHandler) // ✅ Single handler for "/"
+	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/ascii-art", asciiArtHandler)
 
 	fmt.Println("Server running on http://localhost:8080")
@@ -38,7 +38,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// ✅ Check if the requested URL is exactly "/"
 	if r.URL.Path != "/" {
 		renderErrorPage(w, http.StatusNotFound, "404 Not Found: Page does not exist")
 		return
@@ -95,7 +94,7 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 // Custom Error Page Rendering
 func renderErrorPage(w http.ResponseWriter, statusCode int, message string) {
-	w.WriteHeader(statusCode) // Must be set before writing response
+	w.WriteHeader(statusCode)
 
 	var errorTemplate string
 	switch statusCode {
@@ -109,7 +108,6 @@ func renderErrorPage(w http.ResponseWriter, statusCode int, message string) {
 		errorTemplate = "404.html"
 	}
 
-	// Execute the corresponding error template
 	err := templates.ExecuteTemplate(w, errorTemplate, map[string]interface{}{
 		"StatusCode": statusCode,
 		"Message":    message,
