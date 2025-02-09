@@ -1,8 +1,8 @@
-```markdown
+
 # ASCII Art Web
 
 ## Description
-
+```markdown
 Ascii-art-web is an HTTP server written in Go that provides a web interface for generating ASCII art based on user input using different banners. This project extends the previous ascii-art project and allows users to choose one of the following banners:
 
 - **shadow**
