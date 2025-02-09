@@ -1,125 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <title>ASCII-ART Web</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: black;
-            margin: 0;
-        }
-        #screen {
-            position: relative;
-            width: 90vw;
-            max-width: 2000px;
-            height: 90vh;
-            max-height: 1100px;
-            background-color: green;
-            overflow: hidden;
-            border: 10px solid black;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        #scan, #bezel {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-        #scan {
-            opacity: 0.2;
-            z-index: 2;
-        }
-        #bezel {
-            z-index: 3;
-        }
-        #content {
-            font-family: 'VT323', monospace;
-            color: rgb(159, 248, 25);
-            font-size: 24px;
-            text-shadow: 2px 2px 4px rgb(100, 150, 100), 0 0 2em rgb(100, 150, 100), 0 0 0.3em rgb(100, 150, 100);
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-        input, select, button {
-            font-family: 'VT323', monospace;
-            font-size: 20px;
-            padding: 10px;
-            margin: 10px;
-            background: black;
-            color: rgb(159, 248, 25);
-            border: 2px solid rgb(159, 248, 25);
-            outline: none;
-        }
-        button {
-            cursor: pointer;
-        }
-        #ascii-output {
-            margin-top: 20px;
-            white-space: pre;
-            font-size: 16px; 
-            /* overflow: auto; */
-            max-height: 300px;
-            border: 2px solid rgb(159, 248, 25);
-            padding: 10px 20px;
-            width: 95%;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-left:30px;
-        }
-        #authors {
-            position: absolute;
-            bottom: 100px;
-            right: 150px;
-            font-size: 14px;
-            color: rgb(159, 248, 25);
-            font-family: 'VT323', monospace;
-            text-shadow: 1px 1px 3px rgb(100, 150, 100);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <title>ASCII-ART Web</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: black;
+      margin: 0;
+    }
+    #screen {
+      position: relative;
+      width: 90vw;
+      max-width: 2000px;
+      height: 90vh;
+      max-height: 1100px;
+      background-color: green;
+      overflow: hidden;
+      border: 10px solid black;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #scan, #bezel {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+    #scan {
+      opacity: 0.2;
+      z-index: 2;
+    }
+    #bezel {
+      z-index: 3;
+    }
+    #content {
+      font-family: 'VT323', monospace;
+      color: rgb(159, 248, 25);
+      font-size: 24px;
+      text-shadow: 2px 2px 4px rgb(100, 150, 100), 0 0 2em rgb(100, 150, 100), 0 0 0.3em rgb(100, 150, 100);
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    /* Общие стили для элементов формы */
+    input, textarea, select, button {
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      padding: 10px;
+      margin: 10px;
+      background: black;
+      color: rgb(159, 248, 25);
+      border: 2px solid rgb(159, 248, 25);
+      outline: none;
+    }
+    button {
+      cursor: pointer;
+    }
+    /* Располагаем элементы формы в одну строку */
+    #ascii-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    #ascii-output {
+      margin-top: 20px;
+      white-space: pre;
+      font-size: 16px;
+      max-height: 300px;
+      border: 2px solid rgb(159, 248, 25);
+      padding: 10px 20px;
+      width: 95%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 30px;
+    }
+    #authors {
+      position: absolute;
+      bottom: 100px;
+      right: 150px;
+      font-size: 14px;
+      color: rgb(159, 248, 25);
+      font-family: 'VT323', monospace;
+      text-shadow: 1px 1px 3px rgb(100, 150, 100);
+    }
+  </style>
 </head>
 <body>
-    <div id="screen">
-        <img src="/static/images/scanlines.png" id="scan">
-        <img src="/static/images/bezel.png" id="bezel">
-        
-        <div id="content">
-            <h1>ASCII ART Web</h1>
-
-            <form id="ascii-form">
-                <input type="text" id="text-input" placeholder="Enter text...">
-                
-                <select id="banner-select">
-                    <option value="standard">Standard</option>
-                    <option value="shadow">Shadow</option>
-                    <option value="thinkertoy">Thinkertoy</option>
-                </select>
-                
-                <button type="submit">Generate</button>
-            </form>
-
-            <pre id="ascii-output"></pre>
-        </div>
-
-        <div id="authors">Created by: Amangeldykyzy Damilya, Temirkhanov Tamerlan, Kabdylqaq Arnur</div>
+  <div id="screen">
+    <img src="/static/images/scanlines.png" id="scan" alt="Scanlines">
+    <img src="/static/images/bezel.png" id="bezel" alt="Bezel">
+    
+    <div id="content">
+      <h1>ASCII ART Web</h1>
+      <form id="ascii-form">
+        <textarea id="text-input" placeholder="Enter text..." autocomplete="off" rows="1"></textarea>
+        <select id="banner-select">
+          <option value="standard">Standard</option>
+          <option value="shadow">Shadow</option>
+          <option value="thinkertoy">Thinkertoy</option>
+        </select>
+        <button type="submit">Generate</button>
+      </form>
+      <pre id="ascii-output"></pre>
     </div>
-
-    <script src="../static/index.js"></script>
+    
+    <div id="authors">
+      Created by: Amangeldykyzy Damilya, Temirkhanov Tamerlan, Kabdylqaq Arnur
+    </div>
+  </div>
+  <script src="../static/index.js"></script>
 </body>
 </html>
