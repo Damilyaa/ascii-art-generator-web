@@ -1,10 +1,11 @@
 package main
 
 import (
-	"ascii-art-web/ascii-art/banners"
 	"fmt"
 	"html/template"
 	"net/http"
+
+	"ascii-art-web/ascii-art/banners"
 )
 
 // Load all templates, including error pages

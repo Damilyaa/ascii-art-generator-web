@@ -72,10 +72,10 @@
             margin-top: 20px;
             white-space: pre;
             font-size: 16px; 
-            overflow: auto;
+            /* overflow: auto; */
             max-height: 300px;
             border: 2px solid rgb(159, 248, 25);
-            padding: 10px;
+            padding: 10px 20px;
             width: 95%;
             text-align: center;
             display: flex;
@@ -92,8 +92,6 @@
             font-family: 'VT323', monospace;
             text-shadow: 1px 1px 3px rgb(100, 150, 100);
         }
-
-
     </style>
 </head>
 <body>
@@ -119,38 +117,9 @@
             <pre id="ascii-output"></pre>
         </div>
 
-        <div id="authors">Created by: Amangeldykyzy Damilya, Temirkhanov Tamerlan, Kabdylqaq Arnur
-        </div>
-
+        <div id="authors">Created by: Amangeldykyzy Damilya, Temirkhanov Tamerlan, Kabdylqaq Arnur</div>
     </div>
 
-    <script>
-        document.getElementById("ascii-form").addEventListener("submit", function(event) {
-    event.preventDefault(); 
-
-    const text = document.getElementById("text-input").value;
-    const banner = document.getElementById("banner-select").value;
-    const output = document.getElementById("ascii-output");
-
-    if (!text.trim()) {
-        output.textContent = "Please enter text!";
-        return;
-    }
-
-    fetch("/ascii-art", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ text, banner })
-    })
-    .then(response => response.text())
-    .then(data => {
-        output.textContent = data; 
-    })
-    .catch(error => {
-        output.textContent = "Error: " + error;
-    });
-});
-
-    </script>
+    <script src="../static/index.js"></script>
 </body>
 </html>
