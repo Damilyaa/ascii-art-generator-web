@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"ascii-art-web/ascii-art/banners"
 	"net/http"
+
+	"ascii-art-web/ascii-art/banners"
 )
 
 func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {

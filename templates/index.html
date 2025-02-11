@@ -69,7 +69,7 @@
     button {
       cursor: pointer;
     }
-    /* Располагаем элементы формы в одну строку */
+    
     #ascii-form {
       display: flex;
       align-items: center;
@@ -80,7 +80,7 @@
       margin-top: 20px;
       white-space: pre;
       font-size: 16px;
-      max-height: 300px;
+      max-height: 600px;
       border: 2px solid rgb(159, 248, 25);
       padding: 10px 20px;
       width: 95%;
@@ -89,7 +89,9 @@
       justify-content: center;
       align-items: center;
       margin-left: 30px;
+      overflow-y: auto; 
     }
+
     #authors {
       position: absolute;
       bottom: 100px;
