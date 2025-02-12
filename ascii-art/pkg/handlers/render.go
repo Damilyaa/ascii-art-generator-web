@@ -1,10 +1,13 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 )
 
 func RenderErrorPage(w http.ResponseWriter, statusCode int, message string) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
 	w.WriteHeader(statusCode)
 
 	var errorTemplate string
@@ -24,6 +27,8 @@ func RenderErrorPage(w http.ResponseWriter, statusCode int, message string) {
 		"Message":    message,
 	})
 	if err != nil {
-		http.Error(w, "Error rendering error page", http.StatusInternalServerError)
+		log.Printf("[ERROR] Ошибка загрузки баннеров: %v", err)
+		RenderErrorPage(w, http.StatusInternalServerError, "500 Internal Server Error: Failed to load banners")
+		return
 	}
 }
