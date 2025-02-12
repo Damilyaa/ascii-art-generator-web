@@ -34,7 +34,7 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl, exists := templatesMap[banner]
 	if !exists {
-		RenderErrorPage(w, http.StatusNotFound, "404 Not Found: Banner not found")
+		RenderErrorPage(w, http.StatusBadRequest, "400 Bad Request: Banner not found")
 		return
 	}
 

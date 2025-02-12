@@ -5,7 +5,7 @@ import (
 	"text/template"
 )
 
-var tmpl = template.Must(template.ParseFiles("templates/index.html"))
+var tmpl = template.Must(template.ParseGlob("templates/*.html"))
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
