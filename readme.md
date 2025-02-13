@@ -1,4 +1,4 @@
-```markdown
+
 # ASCII Art Web
 
 ASCII Art Web is an HTTP server written in Go that provides a web interface for generating ASCII art from user input using various banner styles. This project enhances the original ascii-art tool by offering multiple banner options: `shadow`, `standard`, and `thinkertoy`.
@@ -195,5 +195,3 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-If you encounter any issues or have questions, please feel free to open an issue in the repository.
-```
