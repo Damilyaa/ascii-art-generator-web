@@ -53,29 +53,3 @@ document.addEventListener("DOMContentLoaded", function() {
         updateAsciiOutput();
     }
 });
-
-document.getElementById("banner-select").addEventListener("change", function() {
-    const allowedBanners = ["standard", "shadow", "thinkertoy"];
-    if (!allowedBanners.includes(this.value)) {
-        alert("Invalid banner selected!");
-        this.value = "standard"; // Reset to default
-    }
-});
-
-document.getElementById("ascii-form").addEventListener("submit", function(event) {
-    const text = document.getElementById("text-input").value.trim();
-    const banner = document.getElementById("banner-select").value;
-
-    const allowedBanners = ["standard", "shadow", "thinkertoy"];
-    if (!allowedBanners.includes(banner)) {
-        alert("Invalid banner selection!");
-        event.preventDefault(); // Stop form submission
-        return;
-    }
-
-    if (!text) {
-        alert("Please enter some text!");
-        event.preventDefault();
-        return;
-    }
-});
