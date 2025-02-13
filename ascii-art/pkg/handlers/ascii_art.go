@@ -1,10 +1,16 @@
 package handlers
 
 import (
-	"net/http"
-
 	"ascii-art-web/ascii-art/banners"
+	"net/http"
 )
+
+// Define allowed banner values
+var validBanners = map[string]bool{
+	"standard":   true,
+	"shadow":     true,
+	"thinkertoy": true,
+}
 
 func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -21,8 +27,13 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	text := r.FormValue("text")
 	banner := r.FormValue("banner")
 
-	if text == "" || banner == "" {
-		RenderErrorPage(w, http.StatusBadRequest, "400 Bad Request: Missing text or banner")
+	if !validBanners[banner] {
+		RenderErrorPage(w, http.StatusBadRequest, "400 Bad Request: Invalid banner selection")
+		return
+	}
+
+	if text == "" {
+		RenderErrorPage(w, http.StatusBadRequest, "400 Bad Request: Missing text input")
 		return
 	}
 
