@@ -1,83 +1,199 @@
-
+```markdown
 # ASCII Art Web
 
-## Description
-```markdown
-Ascii-art-web is an HTTP server written in Go that provides a web interface for generating ASCII art based on user input using different banners. This project extends the previous ascii-art project and allows users to choose one of the following banners:
+ASCII Art Web is an HTTP server written in Go that provides a web interface for generating ASCII art from user input using various banner styles. This project enhances the original ascii-art tool by offering multiple banner options: `shadow`, `standard`, and `thinkertoy`.
 
-- **shadow**
-- **standard**
-- **thinkertoy**
+---
 
-The server implements two primary HTTP endpoints:
-- **GET /** – Returns an HTML page with a form for input.
-- **POST /ascii-art** – Receives text and the selected banner, processes the input, and returns the generated ASCII art.
+## Table of Contents
 
-The server responds with appropriate HTTP status codes:
-- **200 OK** – If the request is processed successfully.
-- **404 Not Found** – If required templates or banner files are not found.
-- **400 Bad Request** – For invalid requests.
-- **500 Internal Server Error** – For any unexpected errors.
+- [Overview](#overview)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Implementation Details](#implementation-details)
+- [Error Handling](#error-handling)
+- [Contributing](#contributing)
+- [Authors](#authors)
+- [License](#license)
 
-## Authors
+---
 
-- Damilya Amangeldykyzy
-- Tamerlan Temirkhanov 
-- Arnur Kabdylkak 
+## Overview
 
-## Usage: How to Run
+ASCII Art Web transforms plain text into visually appealing ASCII art using pre-defined banner templates. It leverages Go's powerful standard library for HTTP handling and template rendering, ensuring a responsive and robust user experience.
 
-1. **Install Go**:  
-   Ensure that Go is installed on your computer. You can download it from the [official Go website](https://golang.org/dl/).
+---
 
-2. **Clone the Repository**:
+## Features
+
+- **Dynamic ASCII Art Generation:** Converts user-provided text into ASCII art.
+- **Multiple Banner Styles:** Supports three distinct banner styles:
+  - `shadow`
+  - `standard`
+  - `thinkertoy`
+- **User-Friendly Web Interface:** Easy-to-use HTML form for input submission.
+- **Robust HTTP Status Handling:** 
+  - `200 OK` for successful operations.
+  - `400 Bad Request` for invalid inputs.
+  - `404 Not Found` when templates or banner files are missing.
+  - `500 Internal Server Error` for unforeseen errors.
+
+---
+
+## Technology Stack
+
+- **Programming Language:** Go (Golang)  
+  A statically typed, compiled language known for its simplicity, efficiency, and strong concurrency support.
+
+- **HTTP Server:**  
+  Built using Go's standard `net/http` package, ensuring a lightweight and efficient server implementation.
+
+- **Template Engine:**  
+  Utilizes Go's `html/template` package for secure and dynamic HTML rendering.
+
+- **Project Structure:**  
+  Organized into distinct directories:
+  - `templates/` for HTML files.
+  - Banner files (e.g., `shadow.txt`, `standard.txt`, `thinkertoy.txt`) managed as per the project's logic.
+
+- **Error Handling:**  
+  Leverages Go's native error handling for robust, predictable responses in various scenarios.
+
+- **Dependencies:**  
+  This project relies solely on Go's standard library, reducing external dependencies and simplifying deployment.
+
+---
+
+## Project Structure
+
+```plaintext
+ascii-art-web
+├── ascii-art
+│   ├── banners
+│   │   ├── banners.go
+│   │   ├── shadow.txt
+│   │   ├── standard.txt
+│   │   └── thinkertoy.txt
+│   ├── cmd
+│   │   └── main.go
+│   └── pkg
+│       ├── ascii
+│       │   ├── template.go
+│       │   └── template_test.go
+│       ├── handlers
+│       │   ├── ascii_art.go
+│       │   ├── home.go
+│       │   └── render.go
+│       └── middleware
+│           ├── logging.go
+│           └── recovery.go
+├── go.mod
+├── main.go
+├── readme.md
+├── static
+│   ├── images
+│   │   ├── bezel.png
+│   │   └── scanlines.png
+│   └── index.js
+└── templates
+    ├── 400.html
+    ├── 404.html
+    ├── 500.html
+    └── index.html
+```
+
+---
+
+## Installation
+
+### Prerequisites
+
+- [Go](https://golang.org/dl/) (version 1.16 or later)
+
+### Steps
+
+1. **Clone the Repository**
    ```bash
    git clone https://01.tomorrow-school.ai/git/damangel/ascii-art-web.git
    cd ascii-art-web
    ```
 
-3. **Run the Server**:
+2. **Run the Server**
    ```bash
    go run main.go
    ```
-   By default, the server starts on port `8080`. You can change the port in the configuration if needed.
-
-4. **Access the Application**:  
-   Open your web browser and navigate to [http://localhost:8080](http://localhost:8080). You will see the main page where you can input text, select a banner, and generate the ASCII art.
-
-## Implementation Details: Algorithm
-
-1. **Template Rendering**:  
-   The main page is rendered using Go's `html/template` package. All HTML templates are located in the `templates` directory at the root of the project.
-
-2. **Form Handling**:  
-   The form on the main page collects the following data:
-   - **Text Input**: The string that will be converted into ASCII art.
-   - **Banner Selection**: An option to choose one of the following banners: `shadow`, `standard`, or `thinkertoy`.
-
-3. **Request Processing**:
-   - When the form is submitted, a POST request is sent to the `/ascii-art` endpoint.
-   - The server parses the form data and validates the input.
-   - Depending on the selected banner, the corresponding ASCII template file is loaded.
-   - Each character of the input text is converted to its ASCII art representation according to the banner file, and the lines are concatenated to form the final output.
-
-4. **Response Formation**:
-   - The generated ASCII art is sent back as part of an HTML response.
-   - Proper HTTP status codes (200, 400, 404, 500) are used to indicate the result of the request processing.
-
-## Instructions
-
-- **Templates Directory**:  
-  Ensure that the HTML templates are placed in the `templates` directory at the root of the project.
-
-- **Banner Files**:  
-  The banner files (`shadow.txt`, `standard.txt`, `thinkertoy.txt`) must be available to the server according to the logic implemented in the project.
-
-- **Error Handling**:  
-  The server is designed to handle errors gracefully, including missing templates, invalid form data, and any unexpected issues.
-
-- **Code and Standards**:  
-  The code follows best practices in Go and uses only the standard Go packages.
+   The server will start on port `8080` by default. Modify the configuration if a different port is required.
 
 ---
+
+## Usage
+
+1. Open your web browser and navigate to: [http://localhost:8080](http://localhost:8080)
+2. Enter the text you wish to convert into ASCII art.
+3. Select the desired banner style (`shadow`, `standard`, or `thinkertoy`).
+4. Submit the form to generate and view the ASCII art.
+
+---
+
+## Implementation Details
+
+### Template Rendering
+
+- Utilizes Go's `html/template` package for rendering HTML pages.
+- HTML templates are stored in the `templates` directory at the project root.
+
+### Form Handling
+
+- The main page form captures:
+  - **Text Input:** The string to be converted.
+  - **Banner Selection:** Choice of banner style for ASCII art generation.
+
+### Request Processing
+
+- **GET /**: Serves the main HTML page containing the input form.
+- **POST /ascii-art**:
+  - Validates the submitted form data.
+  - Loads the corresponding banner file based on user selection.
+  - Maps each character of the input to its ASCII art representation.
+  - Concatenates the generated lines to form the final ASCII art output.
+  
+---
+
+## Error Handling
+
+- **200 OK:** Successfully processed request.
+- **400 Bad Request:** Indicates invalid form data.
+- **404 Not Found:** Triggered when required HTML templates or banner files are missing.
+- **500 Internal Server Error:** For any unexpected errors during processing.
+
+---
+
+## Contributing
+
+Contributions are welcome! If you'd like to enhance ASCII Art Web, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes and open a pull request.
+
+---
+
+## Authors
+
+- **Damilya Amangeldykyzy**
+- **Tamerlan Temirkhanov**
+- **Arnur Kabdylkak**
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+If you encounter any issues or have questions, please feel free to open an issue in the repository.
 ```
