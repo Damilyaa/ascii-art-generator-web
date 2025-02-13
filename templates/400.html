@@ -1,73 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <title>ASCII-ART Web</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: black;
-            margin: 0;
-        }
-        #screen {
-            position: relative;
-            width: 90vw;
-            max-width: 2000px;
-            height: 90vh;
-            max-height: 1100px;
-            background-color: green;
-            overflow: hidden;
-            border: 10px solid black;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        #scan, #bezel {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-        #scan {
-            opacity: 0.2;
-            z-index: 2;
-        }
-        #bezel {
-            z-index: 3;
-        }
-        #content {
-            font-family: 'VT323', monospace;
-            color: rgb(159, 248, 25);
-            font-size: 32px;
-            text-shadow: 2px 2px 4px rgb(100, 150, 100), 0 0 2em rgb(100, 150, 100), 0 0 0.3em rgb(100, 150, 100);
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div id="screen">
-        <img src="/static/images/scanlines.png" id="scan">
-        <img src="/static/images/bezel.png" id="bezel">
-        
-        <div id="content">
-            <h1>400</h1>
-            <h2>BAD REQUEST :( </h2>
-        </div>
-    </div>
 
-   
-</body>
-</html>
+                       
+                             ______   _____    _____     ____    _____                                   _        
+                            |  ____| |  __ \  |  __ \   / __ \  |  __ \         _  _      ___     ___   | |       
+                            | |__    | |__) | | |__) | | |  | | | |__) |       | || |    / _ \   / _ \  | |       
+                            |  __|   |  _  /  |  _  /  | |  | | |  _  /        | || |_  | | | | | | | | | |       
+                            | |____  | | \ \  | | \ \  | |__| | | | \ \        |__   _| | |_| | | |_| | |_|       
+                            |______| |_|  \_\ |_|  \_\  \____/  |_|  \_\          |_|    \___/   \___/  (_)       
+                                                                                                        
+                                                                                            
+        ____               _____          _____    ______    ____    _    _   ______    _____   _______              __       
+        |  _ \      /\     |  __ \        |  __ \  |  ____|  / __ \  | |  | | |  ____|  / ____| |__   __|           / /       
+        | |_) |    /  \    | |  | |       | |__) | | |__    | |  | | | |  | | | |__    | (___      | |          (_) | |        
+        |  _ <    / /\ \   | |  | |       |  _  /  |  __|   | |  | | | |  | | |  __|    \___ \     | |              | |        
+        | |_) |  / ____ \  | |__| |       | | \ \  | |____  | |__| | | |__| | | |____   ____) |    | |           _  | |        
+        |____/  /_/    \_\ |_____/        |_|  \_\ |______|  \___\_\  \____/  |______| |_____/     |_|          (_) | |        
+                                                                                                                    \_\       
+
+    __          __  _____    _____   _______   ______          _____    ____    _____    _____    ______    _____   _______        
+    \ \        / / |  __ \  |_   _| |__   __| |  ____|        / ____|  / __ \  |  __ \  |  __ \  |  ____|  / ____| |__   __|       
+     \ \  /\  / /  | |__) |   | |      | |    | |__          | |      | |  | | | |__) | | |__) | | |__    | |         | |          
+      \ \/  \/ /   |  _  /    | |      | |    |  __|         | |      | |  | | |  _  /  |  _  /  |  __|   | |         | |          
+       \  /\  /    | | \ \   _| |_     | |    | |____        | |____  | |__| | | | \ \  | | \ \  | |____  | |____     | |          
+        \/  \/     |_|  \_\ |_____|    |_|    |______|        \_____|  \____/  |_|  \_\ |_|  \_\ |______|  \_____|    |_|          
+                                                                                                                                
+                                                                                                                                    
+                                             ______    ____    _____    __  __         _  
+                                            |  ____|  / __ \  |  __ \  |  \/  |       | | 
+                                            | |__    | |  | | | |__) | | \  / |       | | 
+                                            |  __|   | |  | | |  _  /  | |\/| |       | | 
+                                            | |      | |__| | | | \ \  | |  | |       |_| 
+                                            |_|       \____/  |_|  \_\ |_|  |_|       (_) 
+
