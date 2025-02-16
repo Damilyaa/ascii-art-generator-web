@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"unicode"
 
 	"ascii-art-web/ascii-art/banners"
 )
@@ -26,6 +27,12 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Check if text contains only ASCII characters
+	if !isASCII(text) {
+		RenderErrorPage(w, http.StatusBadRequest, "400 Bad Request: Text contains non-ASCII characters")
+		return
+	}
+
 	templatesMap, err := banners.ParseTemplates()
 	if err != nil {
 		RenderErrorPage(w, http.StatusInternalServerError, "500 Internal Server Error: Failed to load banners")
@@ -46,4 +53,13 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte(result))
+}
+
+func isASCII(text string) bool {
+	for _, char := range text {
+		if char > unicode.MaxASCII {
+			return false
+		}
+	}
+	return true
 }
